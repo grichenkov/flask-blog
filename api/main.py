@@ -1,5 +1,4 @@
-from api.app import app
-from api.app import db
+from app import app, db
 
 from posts.blueprint import posts
 

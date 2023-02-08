@@ -1,4 +1,4 @@
-from api.app import db
+from app import db
 from datetime import datetime
 import re
 
@@ -9,15 +9,16 @@ def slugify(s):
 
 
 
-post_tags =db.Table("post_tags",
-                    db.Column("post_id", db.Integer, db.ForeignKey("post.id")),
-                    db.Column("tag_id", db.Integer, db.ForeignKey("tag_id"))
-    )
-
+post_tags =db.Table(
+    "post_tags",
+    db.Column("post_id", db.Integer, db.ForeignKey("post.id")),
+    db.Column("tag_id", db.Integer, db.ForeignKey("tag.id"))
+)
 
 
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key = True)
+    sid = db.Column(db.Integer, primary_key = True)
     title = db.Column(db.String(140))
     slug = db.Column(db.String(140), unique = True)
     body = db.Column(db.Text)
@@ -29,7 +30,7 @@ class Post(db.Model):
         self.generate_slug()
 
 
-    tags = db.relationship("Tag", secondary=post_tags, backref=db.backref("posts", lazy="dynamic"))
+    # tags = db.relationship("Tag", secondary=post_tags, backref=db.backref("posts", lazy="dynamic"))
 
 
     def generate_slug(self):
@@ -38,7 +39,8 @@ class Post(db.Model):
 
     def __repr__(self):
         return "<Post id: {}, title: {}>".format(self.id, self.title)
-    
+
+
 class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100))
@@ -50,4 +52,3 @@ class Tag(db.Model):
 
     def __repr__(self):
         return "<Tag id: {}, name: {}>".format(self.id, self.name)
-        
