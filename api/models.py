@@ -17,12 +17,11 @@ post_tags =db.Table(
 
 
 class Post(db.Model):
-    id = db.Column(db.Integer, primary_key = True)
-    sid = db.Column(db.Integer, primary_key = True)
+    id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(140))
-    slug = db.Column(db.String(140), unique = True)
+    slug = db.Column(db.String(140), unique=True)
     body = db.Column(db.Text)
-    created = db.Column(db.DateTime, default = datetime.now())
+    created = db.Column(db.DateTime, default=datetime.now())
     
 
     def __init__(self, *args, **kwargs):
@@ -30,7 +29,7 @@ class Post(db.Model):
         self.generate_slug()
 
 
-    # tags = db.relationship("Tag", secondary=post_tags, backref=db.backref("posts", lazy="dynamic"))
+    tags = db.relationship("Tag", secondary=post_tags, backref=db.backref("posts", lazy="dynamic"))
 
 
     def generate_slug(self):
