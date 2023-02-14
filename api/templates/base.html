@@ -54,6 +54,11 @@
             </li>
           </ul>
           <form class="d-flex" role="search" method="GET">
+
+            <ul class="nav navbar-nav navbar-right">
+              <li><a href="{{ url_for('posts.create_post') }}">+ New post</a></li>
+            </ul>
+
             <input
               class="form-control me-2"
               type="search"
